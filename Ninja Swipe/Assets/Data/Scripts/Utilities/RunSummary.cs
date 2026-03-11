@@ -48,7 +48,7 @@ public class RunSummary : MonoBehaviour
             totalEarnedText.text = currentTotal.ToString();
             kernelsValueText.text = currentKernels.ToString();
 
-            yield return null; 
+            yield return null;
         }
 
         //this is to make sure we end on the exact final numbers

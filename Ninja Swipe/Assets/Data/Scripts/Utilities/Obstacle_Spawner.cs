@@ -20,7 +20,7 @@ public class Obstacle_Spawner : MonoBehaviour
     [Header("Pacing (The Rhythm)")]
     [SerializeField] private float minSpawnDelay = 1.5f;
     [SerializeField] private float maxSpawnDelay = 2.5f;
-    [SerializeField] private float intensityMultiplier = 1f; // Gets faster over time
+    [SerializeField] private float intensityMultiplier = 1f;
 
     private float _lastY;
     private float _nextSpawnTime;

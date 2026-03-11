@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 2105454454955130363}
   - component: {fileID: 8976467483817303684}
   - component: {fileID: 6085717835382110143}
+  - component: {fileID: 9118681959266084573}
   m_Layer: 0
   m_Name: Tata Crow
   m_TagString: Boss
@@ -231,9 +232,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
   maxHealth: 25
+  bossName: Tata Crow
   healthBar: {fileID: 6220397561303513164}
   sfx_Damage: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
   vfxProfile: {fileID: 11400000, guid: 59bea183884106d41959a21fb93180d3, type: 2}
+--- !u!114 &9118681959266084573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924929732010955641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca08cd46b2968a147a5047e949e16467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossDifficulty
 --- !u!1 &2539660464632884421
 GameObject:
   m_ObjectHideFlags: 0

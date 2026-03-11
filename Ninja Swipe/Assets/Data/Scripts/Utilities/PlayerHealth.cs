@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         {
             if (i < _currentLives)
             {
-                heartIcons[i].GetComponent<Image>().color = Color.white; 
+                heartIcons[i].GetComponent<Image>().color = Color.white;
             }
             else
             {

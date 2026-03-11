@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class BossHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
+    [SerializeField] private string bossName;
     [SerializeField] private Slider healthBar;
     [SerializeField] private AudioClip sfx_Damage;
     [SerializeField] private PlayerVFXProfile vfxProfile;
@@ -32,6 +33,8 @@ public class BossHealth : MonoBehaviour
     }
     private void BossDefeated()
     {
+        BossSpawner.Instance.RegisterBossDefeat(bossName);
+
         GameProgressManager.Instance.AddEggs(false, transform.position, true, 30);
         GameProgressManager.Instance.ResetBossProgress();
         GameProgressManager.Instance.ResumeRun();

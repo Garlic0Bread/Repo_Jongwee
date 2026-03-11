@@ -209,7 +209,7 @@ public class GameProgressManager : MonoBehaviour
             _kernelsCollected++;
             UpdateCurrencyUI();
 
-            //punch UI icon so it reacts to being hit
+            //ui punch
             //kernelUITarget.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f);
         });
     }
@@ -218,7 +218,7 @@ public class GameProgressManager : MonoBehaviour
     {
         _isRunning = false;
 
-        //our formula: Total = Kernels + (Normal Eggs * 5) + (Golden Eggs * 15)
+        //formula: Total = Kernels + (Normal Eggs * 5) + (Golden Eggs * 15)
         int eggBonus = (_eggsCollected * kernelsPerEgg) + (_goldenEggsCollected * kernelsPerGoldenEgg);
         int totalEarnedThisRun = _kernelsCollected + eggBonus;
 
@@ -261,7 +261,6 @@ public class GameProgressManager : MonoBehaviour
     {
         SetupNextSegment();
         _currentBossDistance = 0f;
-        //milestoneData.distanceToBoss = newDistanceToBoss; //make it longer for the next level? difficuly scaling
         _bossTriggered = false;
         onBossDefeated?.Invoke();
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TataCrow : MonoBehaviour
+public class TataCrow : MonoBehaviour, IBossScalable
 {
     [Header("Attacking")]
     [SerializeField] private float fireRate;
@@ -38,5 +38,10 @@ public class TataCrow : MonoBehaviour
     private void ShootBeak()
     {
         VFXPooler.Instance.SpawnFromPool(beakPrefab, firePoint.position, Quaternion.identity, 7);
+    }
+    public void ApplyDifficulty(int level)
+    {
+        fireRate *= Mathf.Pow(0.9f, level);
+        beakPrefab.GetComponent<ObstacleManager>().curveIntensity += level * 0.2f;
     }
 }

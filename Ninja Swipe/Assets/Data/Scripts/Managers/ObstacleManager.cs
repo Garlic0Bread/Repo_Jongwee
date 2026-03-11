@@ -9,12 +9,9 @@ public class ObstacleManager : MonoBehaviour
     private Vector3 _startPos;
     private bool _isDeflected = false;
 
-    [Header("Swerving Beak")]
+    public float curveIntensity = 4f;//wideness of the swerve is
     [SerializeField] private bool isSwervingBeak;
-    [Tooltip("How wide the swerve is")]
-    [SerializeField] private float curveIntensity = 4f;
-    [Tooltip(" How fast it swerves")]
-    [SerializeField] private float curveFrequency = 2f;
+    [SerializeField] private float curveFrequency = 2f; //how fast it swerves
 
     [Header("Item Type")]
     [SerializeField] private bool isRottenEgg;

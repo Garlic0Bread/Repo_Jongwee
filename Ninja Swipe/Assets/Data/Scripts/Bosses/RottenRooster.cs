@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RottenRooster : MonoBehaviour
+public class RottenRooster : MonoBehaviour, IBossScalable
 {
     [Header("Visuals")]
     [SerializeField] float shootVisualDuration = 0.15f;
@@ -24,11 +24,11 @@ public class RottenRooster : MonoBehaviour
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         SetState(VisualState.Falling);
     }
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         _startPos = transform.position;
     }
     private void Update()
@@ -80,4 +80,19 @@ public class RottenRooster : MonoBehaviour
                 break;
         }
     }
+
+    public void ApplyDifficulty(int level)
+    {
+        float floatSpeedMultiplier = 1.15f;
+        float fireRateMultiplier = 0.9f;
+        float sizeMultiplier = 1.1f;
+
+        for (int i = 0; i < level; i++)
+        {
+            fireRate *= fireRateMultiplier;
+            floatSpeed *= floatSpeedMultiplier;
+            transform.localScale *= sizeMultiplier;
+        }
+    }
 }
+
