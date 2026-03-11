@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Barrier
+  - Obstacle
+  - Tutorial_Obstacle
+  - Boss
+  - Kernel
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Enemy
+  - Water
+  - UI
+  - Bo
+  - Egg
+  - GoldenEgg
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: FarBackhround
+    uniqueID: 2812563589
+    locked: 0
+  - name: Background
+    uniqueID: 277242985
+    locked: 0
+  - name: Midground
+    uniqueID: 1345712763
+    locked: 0
+  - name: Obstacles
+    uniqueID: 3073715813
+    locked: 0
+  - name: Foreground
+    uniqueID: 3374995569
+    locked: 0
+  - name: Player
+    uniqueID: 2077053479
+    locked: 0
+  - name: UI
+    uniqueID: 2062148147
+    locked: 0
+  m_RenderingLayers:
+  - Default
