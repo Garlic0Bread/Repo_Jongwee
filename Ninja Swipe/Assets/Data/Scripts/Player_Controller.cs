@@ -1,5 +1,15 @@
 using UnityEngine;
 
+[System.Flags]
+public enum PlayerPermissions
+{
+    None = 0,
+    Flap = 1,
+    Attack = 2,
+    Ability = 4,
+    Gameplay = 8
+}
+
 public class Player_Controller : MonoBehaviour
 {
     private Rigidbody2D rb2;
@@ -10,6 +20,7 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private Player_VisualController visualController;
 
     [Header("Flap Physics")]
+    [SerializeField] private float maxHeight = 6f;
     [SerializeField] private float maxFallSpeed = -12f;
 
     [Header("Rotation")]
@@ -51,7 +62,7 @@ public class Player_Controller : MonoBehaviour
 
     void HandleRotation()
     {
-        if (!GameManager.Instance.canStartGame)
+        if (!GameManager.Instance.HasAbility(PlayerPermissions.Flap))
             return;
 
         float targetZ = rb2.linearVelocity.y > 0 ? upRotation : downRotation;
@@ -66,7 +77,7 @@ public class Player_Controller : MonoBehaviour
     }
     void ClampFallSpeed()
     {
-        if (!GameManager.Instance.canStartGame)
+        if (!GameManager.Instance.HasAbility(PlayerPermissions.Flap))
         {
             rb2.gravityScale = 0;
             return;
@@ -87,6 +98,9 @@ public class Player_Controller : MonoBehaviour
 
     public void Melee_Slash()
     {
+        if (!GameManager.Instance.HasAbility(PlayerPermissions.Attack))
+            return;
+
         if (timeSinceAttack >= timeBtwAttacks)
         {
             visualController.PlaySlash();//SLASH SPRITE
@@ -124,6 +138,9 @@ public class Player_Controller : MonoBehaviour
     }
     public void Projectile_Slash()
     {
+        if (!GameManager.Instance.HasAbility(PlayerPermissions.Ability))
+            return;
+
         if (timeSinceAttack < timeBtwAttacks)
             return;
 
@@ -139,7 +156,10 @@ public class Player_Controller : MonoBehaviour
     }
     public void Flap(float flapForce)
     {
-        if (!GameManager.Instance.canStartGame)
+        if (!GameManager.Instance.HasAbility(PlayerPermissions.Flap))
+            return;
+
+        if(transform.position.y >= maxHeight) 
             return;
 
         rb2.linearVelocity = new Vector2(rb2.linearVelocity.x, 0f);

@@ -83,14 +83,9 @@ public class ObstacleManager : MonoBehaviour
 
         if (isObstacle)
         {
-            if (GameManager.Instance.currentStep == TutorialStep.Obstacle_1)
-            {
-                GameManager.Instance.OnObstacleCleared();
-            }
-            else if (GameManager.Instance.currentStep == TutorialStep.Obstacle_2)
-            {
-                GameManager.Instance.OnObstacleCleared_2();
-            }
+            if (GameManager.Instance._isTutorialPhase)
+                TutorialManager.Instance.TriggerEvent(TutorialTrigger.ObstacleCleared);
+
             //Destroy(gameObject);
             gameObject.SetActive(false);
         }
@@ -114,10 +109,9 @@ public class ObstacleManager : MonoBehaviour
 
             VFXPooler.Instance.SpawnFromPool(vfxPrefab, contactPoint, rotation, 1f);
 
-            if (GameManager.Instance.currentStep == TutorialStep.Obstacle_1)
-            {
-                GameManager.Instance.StartTutorial();
-            }
+            if (GameManager.Instance._isTutorialPhase)
+                TutorialManager.Instance.TriggerEvent(TutorialTrigger.ObstacleCleared);
+
             //Destroy(gameObject);
             gameObject.SetActive(false);
         }
@@ -125,7 +119,7 @@ public class ObstacleManager : MonoBehaviour
         //IF THIS IS A DEFLECTED ENEMY ITEM = DAMAGE BOSS
         else if (_isDeflected && collision.gameObject.CompareTag("Boss"))
         {
-            collision.GetComponent<BossHealth>()?.TakeDamage(bossDamage);
+            collision.GetComponent<BossHealth>().TakeDamage(bossDamage);
             _isDeflected = false;
 
             Vector3 direction = (transform.position - transform.position).normalized;
@@ -146,6 +140,7 @@ public class ObstacleManager : MonoBehaviour
             GameProgressManager.Instance.AddEggs(isGolden: false, collision.transform.position);
             gameObject.SetActive(false);
         }
+
         //IF THIS IS A GOLDEN EGG
         else if (isGoldenEgg && collision.CompareTag("Player"))
         {

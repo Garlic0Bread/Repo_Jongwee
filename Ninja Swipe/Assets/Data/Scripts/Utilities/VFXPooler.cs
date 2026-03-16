@@ -15,7 +15,7 @@ public partial class VFXPooler : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            SceneManager.sceneLoaded += OnSceneLoaded;//+= subscribes to the sceneLoaded event
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -24,14 +24,23 @@ public partial class VFXPooler : MonoBehaviour
     }
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;//-= unsubscribes to avoid memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;//unsubscribes to avoid memory leaks
     }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)//run every time scene restarts or changes
-    {
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {//run every time scene restarts or changes
         pools.Clear(); //empty the dictionary so we don't try to use dead objects
     }
 
+    private IEnumerator DespawnAfterTime(GameObject obj, float time, string key)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (obj != null)
+        {
+            obj.SetActive(false);
+            pools[key].Enqueue(obj);
+        }
+    }
     public GameObject SpawnFromPool(GameObject prefab, Vector3 position, Quaternion rotation, float lifetime)
     {
         string key = prefab.name;
@@ -61,17 +70,6 @@ public partial class VFXPooler : MonoBehaviour
         StartCoroutine(DespawnAfterTime(obj, lifetime, key));
 
         return obj;
-    }
-
-    private IEnumerator DespawnAfterTime(GameObject obj, float time, string key)
-    {
-        yield return new WaitForSeconds(time);
-
-        if (obj != null)
-        {
-            obj.SetActive(false);
-            pools[key].Enqueue(obj);
-        }
     }
 }
 

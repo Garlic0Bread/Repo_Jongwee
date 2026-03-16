@@ -9698,7 +9698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfxProfile: {fileID: 11400000, guid: 59bea183884106d41959a21fb93180d3, type: 2}
-  projectileSpeed: 10
+  projectileSpeed: 15
   rb2: {fileID: 6405683804880951930}
 --- !u!199 &7126432543018357798
 ParticleSystemRenderer:

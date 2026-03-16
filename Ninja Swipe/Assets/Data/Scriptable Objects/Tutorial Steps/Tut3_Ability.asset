@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03c4d619e7aecf4f9f466cc6abd9fb2, type: 3}
+  m_Name: Tut3_Ability
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialStepData
+  spawnDelay: 1
+  trigger: 0
+  prefabToSpawn: {fileID: 7050386032040935310, guid: 55a9bf91686149f4091c50a592d79839, type: 3}
+  tutorialText: Swipe For Ability
+  abilitiesUnlocked: 4

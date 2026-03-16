@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 781697293148010557}
   - component: {fileID: 8168883599697664182}
   - component: {fileID: 3251517755054605851}
-  - component: {fileID: 5021603512525713177}
   - component: {fileID: 7299431163440936760}
+  - component: {fileID: 5021603512525713177}
   m_Layer: 0
   m_Name: Rotten Rooster
   m_TagString: Boss
@@ -191,6 +191,18 @@ MonoBehaviour:
   healthBar: {fileID: 301223780675435047}
   sfx_Damage: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
   vfxProfile: {fileID: 11400000, guid: 59bea183884106d41959a21fb93180d3, type: 2}
+--- !u!114 &7299431163440936760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626353058656936708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca08cd46b2968a147a5047e949e16467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossDifficulty
 --- !u!114 &5021603512525713177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,18 +223,6 @@ MonoBehaviour:
   eggPrefab: {fileID: 531677148599692222, guid: 4233322e7b67dfb44b0bef1a138e47a2, type: 3}
   firePoint: {fileID: 3582569763478910497}
   fireRate: 1.8
---- !u!114 &7299431163440936760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626353058656936708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca08cd46b2968a147a5047e949e16467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossDifficulty
 --- !u!1 &2438778919994962759
 GameObject:
   m_ObjectHideFlags: 0

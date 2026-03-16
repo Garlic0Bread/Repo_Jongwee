@@ -12,6 +12,10 @@ public class LoadingScreenController : MonoBehaviour
     [SerializeField] private Slider loadingBar;
     [SerializeField] private TMP_Text loadingText;
 
+    [Header("Canvas Panels")]
+    [SerializeField] private GameObject mainHub;
+    [SerializeField] private GameObject loadingScreen;
+
     [Header("Timing")]
     [SerializeField] private float loadDuration = 3f;
 
@@ -40,6 +44,8 @@ public class LoadingScreenController : MonoBehaviour
     void FinishLoading()
     {
         isLoading = false;
+        //mainHub.SetActive(true);
+        //loadingScreen.SetActive(false);
         SceneManager.LoadScene(1);
     }
 }

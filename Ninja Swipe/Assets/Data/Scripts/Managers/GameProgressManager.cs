@@ -47,8 +47,6 @@ public class GameProgressManager : MonoBehaviour
     public int kernelsPerEgg = 5;
     public int kernelsPerGoldenEgg = 15;
     [SerializeField] private RunSummary summaryUI;
-    [SerializeField] private int _existingKernelBank;
-    [SerializeField] private TextMeshProUGUI bankKernelsTxt;
     [SerializeField] private TextMeshProUGUI kernelText;
     [SerializeField] private TextMeshProUGUI eggsText;
     private int _eggsCollected;
@@ -61,9 +59,6 @@ public class GameProgressManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        _existingKernelBank = PlayerPrefs.GetInt("TotalKernels", 0);
-
-        UpdateCurrencyUI();
         SetupNextSegment();
     }
     private void Update()
@@ -151,17 +146,17 @@ public class GameProgressManager : MonoBehaviour
     #region Currency Logic
     public void AddKernels(int amount)
     {
-        if (GameManager.Instance.currentStep == TutorialStep.Kernel) GameManager.Instance.OnKernelCollected();
+        if (GameManager.Instance._isTutorialPhase)
+            TutorialManager.Instance.TriggerEvent(TutorialTrigger.KernelCollected);
+
         _kernelsCollected += amount;
 
         UpdateCurrencyUI();
     }
     public void AddEggs(bool isGolden, Vector3 worldPos, bool isBossDeath = false, int bossKernels = 0)
     {
-        if (GameManager.Instance.currentStep == TutorialStep.Egg)
-        {
-            GameManager.Instance.OnEggCollected();
-        }
+        if (GameManager.Instance._isTutorialPhase)
+            TutorialManager.Instance.TriggerEvent(TutorialTrigger.EggCollected);
 
         if (isGolden) _goldenEggsCollected++;//decidng whether this is a golden egg or not
         else _eggsCollected++;
@@ -192,7 +187,7 @@ public class GameProgressManager : MonoBehaviour
                 }
             });
         }
-        
+
         float totalDuration = _kernelsToBurst * 0.05f;
         DOVirtual.DelayedCall(totalDuration + 0.1f, () => sfxSource.pitch = 1f);//reset pitch back to normal after the loop finishes
 
@@ -218,13 +213,11 @@ public class GameProgressManager : MonoBehaviour
     {
         _isRunning = false;
 
-        //formula: Total = Kernels + (Normal Eggs * 5) + (Golden Eggs * 15)
+        //this is formula: Total = Kernels + (Normal Eggs * 5) + (Golden Eggs * 15)
         int eggBonus = (_eggsCollected * kernelsPerEgg) + (_goldenEggsCollected * kernelsPerGoldenEgg);
         int totalEarnedThisRun = _kernelsCollected + eggBonus;
 
-        int _existingKernelBank = PlayerPrefs.GetInt("TotalKernels", 0);
-        PlayerPrefs.SetInt("TotalKernels", _existingKernelBank + totalEarnedThisRun);
-        PlayerPrefs.Save();
+        CurrencyManager.Instance.UIUpdate_TotalKernels(totalEarnedThisRun);
 
         if (summaryUI != null)
         {
@@ -245,8 +238,9 @@ public class GameProgressManager : MonoBehaviour
     }
     private void UpdateCurrencyUI()
     {
+        CurrencyManager.Instance.UIUpdate_TotalKernels();
+
         if (kernelText) kernelText.text = _kernelsCollected.ToString();
-        if (bankKernelsTxt) bankKernelsTxt.text = _existingKernelBank.ToString();//updates total kernels available
         if (eggsText) eggsText.text = $"{_eggsCollected}          ({_goldenEggsCollected})";//shows "egg(G eggs)" e.g., 5(1)
     }
     #endregion

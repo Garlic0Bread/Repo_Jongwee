@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 109291023901472389}
   - component: {fileID: 947077755465955473}
   m_Layer: 3
-  m_Name: Tutorial_Wasbee_2
+  m_Name: Tutorial_Wasbee3_Ability
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,8 +410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282947c01aa8ca441bf15a37b6a81d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSwervingBeak: 0
   curveIntensity: 4
+  isSwervingBeak: 0
   curveFrequency: 2
   isRottenEgg: 0
   isNormalEgg: 0
@@ -455,7 +455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -525.80035, y: -457.00006}
+  m_AnchoredPosition: {x: -647, y: -457.00006}
   m_SizeDelta: {x: 282.398, y: 302.6062}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &3932913183808552091

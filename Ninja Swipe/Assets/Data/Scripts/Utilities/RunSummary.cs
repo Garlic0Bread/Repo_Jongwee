@@ -17,7 +17,6 @@ public class RunSummary : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.Instance.canStartGame = false;
         Time.timeScale = 1f;
     }
 

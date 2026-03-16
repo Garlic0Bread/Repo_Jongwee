@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8511483849343128284}
   - component: {fileID: 8328355678621264731}
   m_Layer: 3
-  m_Name: Tutorial_Wasbee_1
+  m_Name: Tutorial_Wasbee1_Attack
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

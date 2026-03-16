@@ -1,27 +1,23 @@
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
-
-public enum TutorialStep { None, Obstacle_1, Obstacle_2, Kernel, Egg, Complete }
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Tutorial Prefabs")]
-    [SerializeField] private GameObject tutorialObstacle_1;
-    [SerializeField] private GameObject tutorialObstacle_2;
-    [SerializeField] private GameObject tutorialKernel;
-    [SerializeField] private GameObject tutorialEgg;
-
     [Header("References")]
-    [SerializeField] private TextMeshProUGUI tutorialHintText;
+    public PlayerPermissions unlockedPermissions;
     [SerializeField] private AudioClip gameplayTrack;
+    [SerializeField] private TutorialManager tutorialManager;
 
     [Header("State")]
-    public TutorialStep currentStep = TutorialStep.None;
     public bool canStartGame = false;
+    public bool _isTutorialPhase = false;
     public bool hasPlayedBefore;
+
+    private Obstacle_Spawner[] obstacleSpawners;
+    private KernelSpawner kernelSpawner;
+    private Player_Controller player;
 
     private void Awake()
     {
@@ -30,20 +26,27 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Instance = this;
 
+        Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        obstacleSpawners = FindObjectsByType<Obstacle_Spawner>(FindObjectsSortMode.None);
+        kernelSpawner = FindFirstObjectByType<KernelSpawner>();
+        player = FindFirstObjectByType<Player_Controller>();
+
         MusicPlayer.Instance.PlayMusic(gameplayTrack);
 
-        //PlayerPrefs.DeleteKey("HasLaunchedBefore"); //enable to test tutorial phase
+        //PlayerPrefs.DeleteKey("HasLaunchedBefore"); //enable to test tutorial
         hasPlayedBefore = PlayerPrefs.GetInt("HasLaunchedBefore", 0) == 1;
     }
 
     public void StopGame()
     {
-        Player_Controller player = FindFirstObjectByType<Player_Controller>();
-        player.gameObject.SetActive(false);
+        if (player != null)
+            player.gameObject.SetActive(false);
+
         canStartGame = false;
+        GameManager.Instance.unlockedPermissions = PlayerPermissions.None;
     }
     public void StartGame()
     {
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HasLaunchedBefore", 1);
             PlayerPrefs.Save();
+
             StartTutorial();
         }
         else
@@ -61,76 +65,33 @@ public class GameManager : MonoBehaviour
     public void UnlockGameplay()
     {
         canStartGame = true;
-        currentStep = TutorialStep.Complete;
+        UnlockAbility(PlayerPermissions.Flap | PlayerPermissions.Attack | PlayerPermissions.Ability | PlayerPermissions.Gameplay);
 
-        foreach (var spawner in FindObjectsByType<Obstacle_Spawner>(FindObjectsSortMode.None))
+        foreach (var spawner in obstacleSpawners)
             spawner.enabled = true;
 
-        var kernelSpawner = FindFirstObjectByType<KernelSpawner>();
-        if (kernelSpawner) kernelSpawner.enabled = true;
+        if (kernelSpawner != null)
+            kernelSpawner.enabled = true;
 
         GameProgressManager.Instance.CalculateDistances();
     }
 
-    #region Tutorial Logic
-    private void SpawnTutorialObject(GameObject prefab, string hint)
-    {
-        tutorialHintText.gameObject.SetActive(true);
-
-        tutorialHintText.text = hint;
-        tutorialHintText.transform.localScale = Vector3.zero;
-        tutorialHintText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
-
-        Obstacle_Spawner spawner = FindFirstObjectByType<Obstacle_Spawner>();
-        if (spawner != null)
-        {
-            Instantiate(prefab, spawner.transform.position, Quaternion.identity);
-        }
-    }
-    public void StartTutorial()
+    void StartTutorial()
     {
         canStartGame = false;
-        currentStep = TutorialStep.Obstacle_1;
-        SpawnTutorialObject(tutorialObstacle_1, "SWIPE TO ATTACK!");
-    }
+        _isTutorialPhase = true;
+        unlockedPermissions = PlayerPermissions.None;
 
-    public void OnObstacleCleared()
+        if (tutorialManager != null)
+            tutorialManager.StartTutorial();
+
+    }
+    public bool HasAbility(PlayerPermissions permission)
     {
-        if (currentStep != TutorialStep.Obstacle_1) return;
-
-        currentStep = TutorialStep.Obstacle_2;
-        DOVirtual.DelayedCall(1f, () =>//basically a 'wait for X seconds'
-            SpawnTutorialObject(tutorialObstacle_2, "SWIPE FOR ABILITY"));
+        return unlockedPermissions.HasFlag(permission);
     }
-    public void OnObstacleCleared_2()
+    public void UnlockAbility(PlayerPermissions permission)
     {
-        if (currentStep != TutorialStep.Obstacle_2) return;
-
-        currentStep = TutorialStep.Kernel;
-        DOVirtual.DelayedCall(1f, () =>
-            SpawnTutorialObject(tutorialKernel, "COLLIDE TO COLLECT KERNELS!"));
+        unlockedPermissions |= permission;
     }
-    public void OnKernelCollected()
-    {
-        if (currentStep != TutorialStep.Kernel) return;
-
-        currentStep = TutorialStep.Egg;
-        DOVirtual.DelayedCall(1f, () =>
-            SpawnTutorialObject(tutorialEgg, "COLLECT EGGS FOR BONUSES!"));
-    }
-    public void OnEggCollected()
-    {
-        if (currentStep != TutorialStep.Egg) return;
-
-        currentStep = TutorialStep.Complete;
-        tutorialHintText.text = "GOOD LUCK!";
-        tutorialHintText.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
-
-        DOVirtual.DelayedCall(1.5f, () =>
-        {
-            tutorialHintText.gameObject.SetActive(false);
-            UnlockGameplay();
-        });
-    }
-    #endregion
 }
