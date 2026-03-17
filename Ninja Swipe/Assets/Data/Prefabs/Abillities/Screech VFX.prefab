@@ -4856,7 +4856,7 @@ GameObject:
   - component: {fileID: 5024430991913066112}
   m_Layer: 0
   m_Name: Screech VFX
-  m_TagString: Obstacle
+  m_TagString: Ability
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

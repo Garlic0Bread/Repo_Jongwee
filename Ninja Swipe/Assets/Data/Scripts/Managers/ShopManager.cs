@@ -28,4 +28,14 @@ public class ShopManager : MonoBehaviour
         UnlockItem(itemData);
         return true;
     }
+
+    public static bool IsOwned(string id)
+    {
+        return PlayerPrefs.GetInt(id, 0) == 1;
+    }
+
+    public static void SetOwned(string id)
+    {
+        PlayerPrefs.SetInt(id, 1);
+    }
 }

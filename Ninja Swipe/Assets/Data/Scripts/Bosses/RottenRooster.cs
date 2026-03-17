@@ -22,6 +22,11 @@ public class RottenRooster : MonoBehaviour, IBossScalable
     [SerializeField] private float fireRate = 2f;
     private float _fireTimer;
 
+    [Header("Upgrades")]
+    [SerializeField] private float floatSpeedMultiplier = 1.25f;
+    [SerializeField] private float fireRateMultiplier = 1.5f;
+    [SerializeField] private float sizeMultiplier = 1.1f;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -83,10 +88,6 @@ public class RottenRooster : MonoBehaviour, IBossScalable
 
     public void ApplyDifficulty(int level)
     {
-        float floatSpeedMultiplier = 1.15f;
-        float fireRateMultiplier = 0.9f;
-        float sizeMultiplier = 1.1f;
-
         for (int i = 0; i < level; i++)
         {
             fireRate *= fireRateMultiplier;

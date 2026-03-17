@@ -5,7 +5,6 @@ public class KernelUIAnimation : MonoBehaviour
 {
     public void Play(Vector3 startWorldPos, Vector3 targetScreenPos, System.Action onComplete)
     {
-        //convert World Position to Screen Position
         Vector3 screenPos = Camera.main.WorldToScreenPoint(startWorldPos);
         transform.position = screenPos;
         transform.localScale = Vector3.zero;

@@ -240,8 +240,8 @@ public class GameProgressManager : MonoBehaviour
     {
         CurrencyManager.Instance.UIUpdate_TotalKernels();
 
-        if (kernelText) kernelText.text = _kernelsCollected.ToString();
-        if (eggsText) eggsText.text = $"{_eggsCollected}          ({_goldenEggsCollected})";//shows "egg(G eggs)" e.g., 5(1)
+        if (kernelText) kernelText.SetText(_kernelsCollected.ToString());
+        if (eggsText) eggsText.SetText($"{_eggsCollected}          ({_goldenEggsCollected})");//shows "egg(G eggs)" e.g., 5(1)
     }
     #endregion
 

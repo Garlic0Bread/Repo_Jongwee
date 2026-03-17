@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7813feb5b59f4124ab285b9a938bf207, type: 3}
+  m_Name: Skin_Default
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
+  itemID: Jongwe
+  type: 0
+  price: 0
+  previewIcon: {fileID: -8389803241846658691, guid: c31c28511c153634eb4e65533629f040, type: 3}
+  flapSprite: {fileID: -4402978440810013182, guid: 8d3a2561a3fb3a44baf674c772183359, type: 3}
+  slashSprite: {fileID: 6410491735979539247, guid: 7eac0b6bdb93e7447b4f1d2f4e9ca227, type: 3}
+  fallingSprite: {fileID: -8389803241846658691, guid: c31c28511c153634eb4e65533629f040, type: 3}
+  environmentRoot: {fileID: 0}

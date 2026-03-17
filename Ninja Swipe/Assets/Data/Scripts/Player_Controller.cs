@@ -29,8 +29,8 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] private float rotationLerpSpeed = 6f;
 
     [Header("Projectile Ability")]
-    [SerializeField] private float projectileCooldown = 5f;
-    [SerializeField] private AbilityCooldownUI projectileCooldownUI;
+    [SerializeField] private float abilityCooldown = 5f;
+    [SerializeField] private AbilityCooldownUI abilityCooldownUI;
 
     [Header("Melee Attack Settings")]
     [SerializeField] private float timeSinceAttack = 0.0f;
@@ -104,23 +104,28 @@ public class Player_Controller : MonoBehaviour
         if (timeSinceAttack >= timeBtwAttacks)
         {
             visualController.PlaySlash();//SLASH SPRITE
+
+            #region Slash VFX & SFX
             AudioClip sfx_Slash = vfxProfile.Get_SFX(VFXType.Melee_Slash);//SLASH SOUND
             GameObject vfx_SlashPrefab = vfxProfile.GetVFX(VFXType.Melee_Slash);//SLASH VFX
 
             SFXPooler.Instance.PlaySFX(sfx_Slash, 0.7f);
             VFXPooler.Instance.SpawnFromPool(vfx_SlashPrefab, attackTransform.position, vfx_SlashPrefab.transform.rotation, 1f);
+            #endregion
 
             //ATTACKING LOGIC :)
             hits = Physics2D.CircleCastAll(attackTransform.position, attackRange, transform.right, 0f, attackableLayer);
 
             for (int i = 0; i < hits.Length; i++)
             {
+                #region HIT VFX
                 Vector3 direction = (hits[i].transform.position - transform.position).normalized;
                 Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
                 Vector3 contactPoint = hits[i].transform.position;
 
                 GameObject vfxPrefab = vfxProfile.GetVFX(VFXType.Hit_Enemy);
                 VFXPooler.Instance.SpawnFromPool(vfxPrefab, contactPoint, rotation, 1f);
+                #endregion
 
                 ObstacleManager obstacleManager = hits[i].collider.GetComponent<ObstacleManager>();
                 obstacleManager.OnDestroyedByPlayer();//object handles its own death
@@ -144,13 +149,13 @@ public class Player_Controller : MonoBehaviour
         if (timeSinceAttack < timeBtwAttacks)
             return;
 
-        if (projectileCooldownUI.IsCoolingDown)
+        if (abilityCooldownUI.IsCoolingDown)
             return;
 
         GameObject projectilePrefab = vfxProfile.GetVFX(VFXType.Projectile);
         VFXPooler.Instance.SpawnFromPool(projectilePrefab, attackTransform.position, projectilePrefab.transform.rotation, 5f);
 
-        projectileCooldownUI.StartCooldown(projectileCooldown);
+        abilityCooldownUI.StartCooldown(abilityCooldown);
 
         timeSinceAttack = 0f;
     }

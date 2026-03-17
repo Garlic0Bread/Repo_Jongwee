@@ -42,7 +42,7 @@ public class BossSpawner : MonoBehaviour
         int level = bossLevels[profile.bossName];
 
         BossDifficulty boss = bossObj.GetComponent<BossDifficulty>();
-        boss?.ApplyDifficulty(level);
+        boss.ApplyDifficulty(level);
 
         _currentIndex = (_currentIndex + 1) % bossRotation.Count;
     }

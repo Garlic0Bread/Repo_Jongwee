@@ -102,17 +102,18 @@ public class ObstacleManager : MonoBehaviour
 
             EggSplatUI.Instance.ShowSplat();
 
+            #region VFX
             Vector3 direction = (transform.position - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
             GameObject vfxPrefab = vfxProfile.GetVFX(VFXType.Collisions);
             Vector3 contactPoint = transform.position;
 
             VFXPooler.Instance.SpawnFromPool(vfxPrefab, contactPoint, rotation, 1f);
+            #endregion
 
             if (GameManager.Instance._isTutorialPhase)
                 TutorialManager.Instance.TriggerEvent(TutorialTrigger.ObstacleCleared);
 
-            //Destroy(gameObject);
             gameObject.SetActive(false);
         }
 
@@ -122,12 +123,14 @@ public class ObstacleManager : MonoBehaviour
             collision.GetComponent<BossHealth>().TakeDamage(bossDamage);
             _isDeflected = false;
 
+            #region VFX
             Vector3 direction = (transform.position - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
             GameObject vfxPrefab = vfxProfile.GetVFX(VFXType.Collisions);
             Vector3 contactPoint = transform.position;
 
             VFXPooler.Instance.SpawnFromPool(vfxPrefab, contactPoint, rotation, 1f);
+            #endregion
 
             gameObject.SetActive(false);
         }

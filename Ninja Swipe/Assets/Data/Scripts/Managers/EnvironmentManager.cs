@@ -4,42 +4,18 @@ using System.Collections.Generic;
 public class EnvironmentManager : MonoBehaviour
 {
     public static EnvironmentManager Instance;
-
-    [SerializeField] private List<EnvironmentData> environments;
+    [SerializeField] private List<GameObject> environments;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void ActivateEnvironment(EnvironmentData environment)
+    public void SetEnvironment(GameObject target)
     {
         foreach (var env in environments)
         {
-            env.environmentRoot.SetActive(false);
+            env.SetActive(env == target);
         }
-
-        environment.environmentRoot.SetActive(true);
-
-        PlayerPrefs.SetString("ActiveEnvironment", environment.itemID);
-        PlayerPrefs.Save();
-    }
-
-    public void LoadEnvironment()
-    {
-        string envID = PlayerPrefs.GetString("ActiveEnvironment", "");
-
-        foreach (var env in environments)
-        {
-            if (env.itemID == envID)
-            {
-                ActivateEnvironment(env);
-                return;
-            }
-        }
-
-        // fallback
-        if (environments.Count > 0)
-            ActivateEnvironment(environments[0]);
     }
 }

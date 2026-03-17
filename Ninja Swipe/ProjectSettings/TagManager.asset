@@ -9,6 +9,7 @@ TagManager:
   - Tutorial_Obstacle
   - Boss
   - Kernel
+  - Ability
   layers:
   - Default
   - TransparentFX

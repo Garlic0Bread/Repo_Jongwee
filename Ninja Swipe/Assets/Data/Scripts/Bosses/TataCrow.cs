@@ -7,6 +7,9 @@ public class TataCrow : MonoBehaviour, IBossScalable
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject beakPrefab;
 
+    [Header("Upgrades")]
+    [SerializeField] private float moveSpeedMultiplier = 1.25f;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private Vector2 radius = new(2f, 4f);
@@ -41,7 +44,8 @@ public class TataCrow : MonoBehaviour, IBossScalable
     }
     public void ApplyDifficulty(int level)
     {
-        fireRate *= Mathf.Pow(0.9f, level);
-        beakPrefab.GetComponent<ObstacleManager>().curveIntensity += level * 0.2f;
+        moveSpeed *= moveSpeedMultiplier;
+        fireRate *= Mathf.Pow(1.5f, level);
+        beakPrefab.GetComponent<ObstacleManager>().curveIntensity += level * 0.5f;
     }
 }

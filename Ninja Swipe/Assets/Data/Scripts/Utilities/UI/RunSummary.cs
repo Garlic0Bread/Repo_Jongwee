@@ -16,6 +16,7 @@ public class RunSummary : MonoBehaviour
 
     public void RestartGame()
     {
+        GameManager.Instance.StopGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1f;
     }
@@ -42,18 +43,18 @@ public class RunSummary : MonoBehaviour
             int currentKernels = (int)Mathf.Lerp(0, kernels, progress);
 
 
-            eggBonusText.text = $"+{currentBonus}";
-            milesValueText.text = $"{currentMiles}m";
-            totalEarnedText.text = currentTotal.ToString();
-            kernelsValueText.text = currentKernels.ToString();
+            eggBonusText.SetText($"+{currentBonus}");
+            milesValueText.SetText($"{currentMiles}m");
+            totalEarnedText.SetText(currentTotal.ToString());
+            kernelsValueText.SetText(currentKernels.ToString());
 
             yield return null;
         }
 
         //this is to make sure we end on the exact final numbers
-        milesValueText.text = $"{miles}m";
-        eggBonusText.text = $"+{bonus} bonus";
-        totalEarnedText.text = total.ToString();
-        kernelsValueText.text = kernels.ToString();
+        milesValueText.SetText($"{miles}m");
+        eggBonusText.SetText($"+{bonus} bonus");
+        totalEarnedText.SetText(total.ToString());
+        kernelsValueText.SetText(kernels.ToString());
     }
 }

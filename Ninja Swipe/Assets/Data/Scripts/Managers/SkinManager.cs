@@ -5,9 +5,9 @@ public class SkinManager : MonoBehaviour
 {
     public static SkinManager Instance;
 
-    [SerializeField] private List<SkinData> allSkins;
+    [SerializeField] private List<ShopItemData> allSkins;
 
-    private SkinData equippedSkin;
+    private ShopItemData equippedSkin;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class SkinManager : MonoBehaviour
 
         foreach (var skin in allSkins)
         {
-            if (skin.skinID == skinID)
+            if (skin.itemID == skinID)
             {
                 equippedSkin = skin;
                 return;
@@ -32,11 +32,11 @@ public class SkinManager : MonoBehaviour
             equippedSkin = allSkins[0];
     }
 
-    public void EquipSkin(SkinData skin)
+    public void EquipSkin(ShopItemData skin)
     {
         equippedSkin = skin;
 
-        PlayerPrefs.SetString("EquippedSkin", skin.skinID);
+        PlayerPrefs.SetString("EquippedSkin", skin.itemID);
         PlayerPrefs.Save();
 
         ApplyEquippedSkin(FindFirstObjectByType<Player_VisualController>());

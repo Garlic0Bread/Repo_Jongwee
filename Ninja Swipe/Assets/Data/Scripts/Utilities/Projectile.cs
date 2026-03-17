@@ -17,26 +17,30 @@ public class Projectile : MonoBehaviour
         bool obstacle = collision.CompareTag("Obstacle");
         bool tutorial_obstacle = collision.CompareTag("Tutorial_Obstacle");
 
+        var bossHealth = collision.GetComponent<BossHealth>();
+
         if (obstacle || tutorial_obstacle)
         {
-            ObstacleManager obstacleManager_tutorialObject = collision.GetComponent<ObstacleManager>();
+            ObstacleManager obstacleManager = collision.GetComponent<ObstacleManager>();
 
+            #region VFX & SFX
             Vector2 contactPoint = collision.ClosestPoint(transform.position);
             Vector2 direction = (collision.transform.position - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(Vector3.forward, direction);
-
-            GameProgressManager.Instance.AddEggs(false, collision.transform.position);
-
 
             GameObject vfxPrefab = vfxProfile.GetVFX(VFXType.Hit_Enemy);
             AudioClip vfxSoundEffect = vfxProfile.Get_SFX(VFXType.Hit_Enemy);
             AudioSource.PlayClipAtPoint(vfxSoundEffect, contactPoint, 0.5f);
 
             VFXPooler.Instance.SpawnFromPool(vfxPrefab, contactPoint, rotation, 1f);
+            #endregion
 
-            if (obstacleManager_tutorialObject != null)
+            if (obstacleManager != null)
+                obstacleManager.OnDestroyedByPlayer();
+
+            if(bossHealth != null)
             {
-                obstacleManager_tutorialObject.OnDestroyedByPlayer();
+                bossHealth.TakeDamage(10);
             }
         }
     }

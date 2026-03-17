@@ -46,14 +46,17 @@ public class GameManager : MonoBehaviour
             player.gameObject.SetActive(false);
 
         canStartGame = false;
+        kernelSpawner.enabled = false;
         GameManager.Instance.unlockedPermissions = PlayerPermissions.None;
     }
     public void StartGame()
     {
-        if (!hasPlayedBefore)
+        if (PlayerPrefs.GetInt("HasLaunchedBefore", 0) == 0)
         {
             PlayerPrefs.SetInt("HasLaunchedBefore", 1);
             PlayerPrefs.Save();
+
+            hasPlayedBefore = true;
 
             StartTutorial();
         }

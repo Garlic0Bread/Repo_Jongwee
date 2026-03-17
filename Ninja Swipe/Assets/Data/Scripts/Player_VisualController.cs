@@ -15,7 +15,7 @@ public class Player_VisualController : MonoBehaviour
     private VisualState currentState;
     private float slashTimer;
 
-    private SkinData currentSkin;
+    private ShopItemData currentSkin;
 
     [SerializeField] float slashDuration = 0.15f;
 
@@ -40,7 +40,7 @@ public class Player_VisualController : MonoBehaviour
         }
     }
 
-    public void ApplySkin(SkinData skin)
+    public void ApplySkin(ShopItemData skin)
     {
         currentSkin = skin;
         SetState(VisualState.Falling);
