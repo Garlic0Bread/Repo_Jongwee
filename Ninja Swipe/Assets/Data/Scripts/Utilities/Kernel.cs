@@ -11,6 +11,10 @@ public class Kernel : MonoBehaviour
     {
         rb2 = GetComponent<Rigidbody2D>();
     }
+    private void OnDisable()
+    {
+        isAttracted = false;
+    }
     private void FixedUpdate()
     {
         if (isAttracted)
@@ -30,11 +34,13 @@ public class Kernel : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            isAttracted = false;
+
             AudioClip vfxSoundEffect = vfxProfile.Get_SFX(VFXType.Collisions);
             AudioSource.PlayClipAtPoint(vfxSoundEffect, transform.position, 0.5f);
 
             GameProgressManager.Instance.AddKernels(1);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

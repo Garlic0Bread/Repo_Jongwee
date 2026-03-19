@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7813feb5b59f4124ab285b9a938bf207, type: 3}
   m_Name: Environment_Sky
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
-  itemID: Default_Sky
-  type: 1
   price: 0
+  itemID: Default_Sky
+  isDefault: 1
+  itemType: 1
   previewIcon: {fileID: 0}
   flapSprite: {fileID: 0}
   slashSprite: {fileID: 0}
   fallingSprite: {fileID: 0}
-  environmentRoot: {fileID: 0}
+  environmentRoot: {fileID: 4276642035270865088, guid: e2f50d0a76d13a54e8d679ef32325b83, type: 3}

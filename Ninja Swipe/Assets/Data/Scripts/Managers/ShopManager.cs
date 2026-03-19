@@ -1,41 +1,45 @@
+using TMPro;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance;
 
+    [SerializeField] private int totalKernelsAvailable;
+    [SerializeField] private TextMeshProUGUI totalKernelsAvailable_txt;
+
     private void Awake()
     {
         Instance = this;
+        totalKernelsAvailable = PlayerPrefs.GetInt("TotalKernels", 0);
+
+        Update_UI();
     }
 
-    public bool IsUnlocked(ShopItemData itemData)
+    public void BuyItem(ShopItemData itemData)
     {
-        return PlayerPrefs.GetInt(itemData.itemID, 0) == 1;
-    }
+        if (PlayerInventory.Instance.IsOwned(itemData.itemID))
+            return;
 
-    public void UnlockItem(ShopItemData itemData)
-    {
-        PlayerPrefs.SetInt(itemData.itemID, 1);
-        PlayerPrefs.Save();
-    }
-    public bool TryPurchasing(ShopItemData itemData)
-    {
-        if(CurrencyManager.Instance._kernels < itemData.price)
-            return false;
+        if (CurrencyManager.Instance._kernels < itemData.price)
+            return;
 
         CurrencyManager.Instance.SpendKernels(itemData.price);
-        UnlockItem(itemData);
-        return true;
+        PlayerInventory.Instance.AddItem(itemData.itemID);
+
+        Update_UI();
+    }
+    public void EquipItem(ShopItemData item)
+    {
+        if (!PlayerInventory.Instance.IsOwned(item.itemID))
+            return;
+
+        EquipmentManager.Instance.Equip(item);
     }
 
-    public static bool IsOwned(string id)
+    void Update_UI()
     {
-        return PlayerPrefs.GetInt(id, 0) == 1;
-    }
-
-    public static void SetOwned(string id)
-    {
-        PlayerPrefs.SetInt(id, 1);
+        totalKernelsAvailable = PlayerPrefs.GetInt("TotalKernels", 0);
+        totalKernelsAvailable_txt.text = totalKernelsAvailable.ToString();
     }
 }

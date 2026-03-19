@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class RunSummary : MonoBehaviour
 {
     [Header("UI Text References")]
+    [SerializeField] private TextMeshProUGUI eggBonusText;
     [SerializeField] private TextMeshProUGUI milesValueText;
     [SerializeField] private TextMeshProUGUI kernelsValueText;
-    [SerializeField] private TextMeshProUGUI eggBonusText;
     [SerializeField] private TextMeshProUGUI totalEarnedText;
 
     [Header("Animation Settings")]

@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         obstacleSpawners = FindObjectsByType<Obstacle_Spawner>(FindObjectsSortMode.None);
-        kernelSpawner = FindFirstObjectByType<KernelSpawner>();
         player = FindFirstObjectByType<Player_Controller>();
 
         MusicPlayer.Instance.PlayMusic(gameplayTrack);
@@ -46,8 +44,15 @@ public class GameManager : MonoBehaviour
             player.gameObject.SetActive(false);
 
         canStartGame = false;
-        kernelSpawner.enabled = false;
         GameManager.Instance.unlockedPermissions = PlayerPermissions.None;
+
+        if (kernelSpawner == null)
+        {
+            kernelSpawner = FindFirstObjectByType<KernelSpawner>();
+            kernelSpawner.enabled = false;
+        }
+        else
+            kernelSpawner.enabled = false;
     }
     public void StartGame()
     {
@@ -73,7 +78,12 @@ public class GameManager : MonoBehaviour
         foreach (var spawner in obstacleSpawners)
             spawner.enabled = true;
 
-        if (kernelSpawner != null)
+        if (kernelSpawner == null)
+        {
+            kernelSpawner = FindFirstObjectByType<KernelSpawner>();
+            kernelSpawner.enabled = true;
+        }
+        else
             kernelSpawner.enabled = true;
 
         GameProgressManager.Instance.CalculateDistances();

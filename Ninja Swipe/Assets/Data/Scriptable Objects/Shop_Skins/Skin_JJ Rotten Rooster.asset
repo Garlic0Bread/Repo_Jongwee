@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7813feb5b59f4124ab285b9a938bf207, type: 3}
   m_Name: Skin_JJ Rotten Rooster
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
+  price: 550
   itemID: JJ_Rotten Rooster
-  type: 0
-  price: 100
+  isDefault: 0
+  itemType: 0
   previewIcon: {fileID: -8831267612004775744, guid: a87ee9919063d884aaadd9734b880225, type: 3}
   flapSprite: {fileID: -2576643118037697944, guid: 5bdb83e625814d44abcd8904481ce6e8, type: 3}
   slashSprite: {fileID: 916316244008937350, guid: e61149d58231bba41bb76e09f4351579, type: 3}

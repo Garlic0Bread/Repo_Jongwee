@@ -26,7 +26,7 @@ public class Player_VisualController : MonoBehaviour
     private void Start()
     {
         SkinManager.Instance.ApplyEquippedSkin(this);
-        spriteRenderer.sprite = currentSkin.fallingSprite;
+        //spriteRenderer.sprite = currentSkin.fallingSprite;
 
     }
     private void Update()
@@ -43,6 +43,8 @@ public class Player_VisualController : MonoBehaviour
     public void ApplySkin(ShopItemData skin)
     {
         currentSkin = skin;
+
+        spriteRenderer.sprite = currentSkin.fallingSprite;
         SetState(VisualState.Falling);
     }
 

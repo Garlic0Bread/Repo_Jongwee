@@ -1,16 +1,46 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShopItemButton : MonoBehaviour
 {
-    public Image icon;
-    public GameObject lockIcon;
+    private int itemPrice;
 
-    public void Setup(ShopItemData data)
+    [SerializeField] private ShopItemData item;
+    [SerializeField] private GameObject priceObj;
+    [SerializeField] private TextMeshProUGUI btnText;
+    [SerializeField] private TextMeshProUGUI priceText;
+
+    private void Awake()
     {
-        icon.sprite = data.previewIcon;
+        itemPrice = item.price;
 
-        bool owned = ShopManager.IsOwned(data.itemID);
-        lockIcon.SetActive(!owned);
+        if (PlayerInventory.Instance.IsOwned(item.itemID))
+        {
+            priceObj.SetActive(false);
+            btnText.SetText("Equip");
+        }
+
+        else
+        {
+            priceObj.SetActive(true);
+            btnText.SetText("Buy");
+            priceText.SetText($"{itemPrice}");
+        }
+    }
+
+    public void OnItemClicked(ShopItemData item)
+    {
+        if (PlayerInventory.Instance.IsOwned(item.itemID))
+        {
+            ShopManager.Instance.EquipItem(item);
+        }
+
+        else
+        {
+            ShopManager.Instance.BuyItem(item);
+
+            priceObj.SetActive(false);
+            btnText.SetText("Equip");
+        }
     }
 }

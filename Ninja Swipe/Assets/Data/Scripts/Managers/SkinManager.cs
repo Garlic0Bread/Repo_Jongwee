@@ -1,52 +1,64 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class SkinManager : MonoBehaviour
 {
     public static SkinManager Instance;
 
-    [SerializeField] private List<ShopItemData> allSkins;
-
-    private ShopItemData equippedSkin;
+    public ShopItemData[] allItems;
 
     private void Awake()
     {
         Instance = this;
-        LoadSkin();
     }
 
-    void LoadSkin()
+    public void ApplyAll()
     {
-        string skinID = PlayerPrefs.GetString("EquippedSkin", "");
+        var playerViz = FindFirstObjectByType<Player_VisualController>();
+        if (playerViz != null)
+            ApplyEquippedSkin(playerViz);
 
-        foreach (var skin in allSkins)
+        Apply_Environment();
+    }
+    void Apply_Environment()
+    {
+        string id = EquipmentManager.Instance.equippedEnvironment_ID;
+
+        foreach (var item in allItems)
         {
-            if (skin.itemID == skinID)
+            if (item.itemID == id && item.environmentRoot != null)
             {
-                equippedSkin = skin;
+                Instantiate(item.environmentRoot);
                 return;
             }
         }
-
-        if (allSkins.Count > 0)
-            equippedSkin = allSkins[0];
     }
-
-    public void EquipSkin(ShopItemData skin)
-    {
-        equippedSkin = skin;
-
-        PlayerPrefs.SetString("EquippedSkin", skin.itemID);
-        PlayerPrefs.Save();
-
-        ApplyEquippedSkin(FindFirstObjectByType<Player_VisualController>());
-    }
-
     public void ApplyEquippedSkin(Player_VisualController player)
     {
-        if (equippedSkin != null && player != null)
+        var skin = GetEquippedSkin();
+        if (skin != null)
+            player.ApplySkin(skin);
+    }
+
+    ShopItemData GetEquippedSkin()
+    {
+        string id = EquipmentManager.Instance.equippedSkin_ID;
+
+        foreach (var item in allItems)
         {
-            player.ApplySkin(equippedSkin);
+            if (item.itemID == id)
+                return item;
         }
+        return GetDefault(ShopItemType.Skin);
+    }
+    public ShopItemData GetDefault(ShopItemType type)
+    {
+        foreach (var item in allItems)
+        {
+            if (item.itemType == type && item.isDefault)
+                return item;
+        }
+
+        Debug.LogError("No default set for " + type);
+        return null;
     }
 }

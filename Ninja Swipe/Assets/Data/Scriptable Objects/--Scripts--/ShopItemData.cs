@@ -9,9 +9,10 @@ public enum ShopItemType
 [CreateAssetMenu(menuName = "Shop/Item")]
 public class ShopItemData : ScriptableObject
 {
-    public string itemID;
-    public ShopItemType type;
     public int price;
+    public string itemID;
+    public bool isDefault;
+    public ShopItemType itemType;
 
     [Header("Visual")]
     public Sprite previewIcon;
